@@ -9,6 +9,9 @@
 ;;; Code:
 
 
+(require 'phps-mode-macros)
+
+
 (defvar
   phps-mode-cache--use-p
   t
@@ -65,21 +68,39 @@ optionally not older than SOURCE-FILE."
   (let ((cache-filename (phps-mode-cache--get-filename-for-key key))
         (save-silently t))
     (with-temp-file cache-filename
-      (insert (format "'%S" data)))))
+      ;; NOTE (format "%S") before
+      ;; could sometimes print referenced data like #11
+      ;; which would break reading from cache
+      (let ((print-circle nil)
+            (print-gensym nil)
+            (print-length 200)
+            (print-level 10))
+      (insert "'" (prin1-to-string data))))))
 
 (defun phps-mode-cache-load (key)
-  "Load DATA in cache for KEY."
+  "Load data from cache for KEY."
   (with-temp-buffer
     (insert-file-contents
      (phps-mode-cache--get-filename-for-key
       key))
-    (let ((data
+    (let ((data))
+      (condition-case err
+          (setq
+           data
            (eval
             (car
              (read-from-string
               (buffer-substring-no-properties
                (point-min)
-               (point-max)))))))
+               (point-max))))))
+        (error
+         (phps-mode-debug-message
+          (message
+           "Failed to load cache, error: %s, data: %s"
+           err
+           (buffer-substring-no-properties
+            (point-min)
+            (point-max))))))
       data)))
 
 

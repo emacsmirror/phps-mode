@@ -41,6 +41,20 @@
   (message "Passed cache load")
   (phps-mode-cache-delete "abc")
 
+  (phps-mode-cache-save "krazinoff" "abc")
+  (should
+   (equal
+    (phps-mode-cache-test-p "abc")
+    t))
+  (message "Passed cache test after save 2")
+
+  (should
+   (equal
+    (phps-mode-cache-load "abc")
+    "krazinoff"))
+  (message "Passed cache load 2")
+  (phps-mode-cache-delete "abc")
+
   (message "Passed tests for cache"))
 
 (phps-mode-test-cache)
