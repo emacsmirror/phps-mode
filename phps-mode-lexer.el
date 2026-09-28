@@ -148,7 +148,7 @@
 
               ;; Run rules based on state
               (phps-mode-lexer--reset-match-data)
-              (when-let ((lambdas
+              (when-let* ((lambdas
                           (gethash
                            phps-mode-lexer--state
                            phps-mode-lexer--lambdas-by-state)))

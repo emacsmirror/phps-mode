@@ -786,7 +786,7 @@ Optionally start FROM-END-OF-LINE."
                 (setq
                  match-type
                  'line-after-html-line)
-                (when-let ((html-bracket-level
+                (when-let* ((html-bracket-level
                             (phps-mode-indent--get-html-string-bracket-level
                              previous-line-string)))
                   (when (> html-bracket-level 0)
@@ -794,7 +794,7 @@ Optionally start FROM-END-OF-LINE."
                      new-indentation
                      (+ new-indentation tab-width))))
 
-                (when-let ((html-bracket-level
+                (when-let* ((html-bracket-level
                             (phps-mode-indent--get-html-string-bracket-level
                              current-line-string)))
                   (when (< html-bracket-level 0)
@@ -834,7 +834,7 @@ Optionally start FROM-END-OF-LINE."
                 (setq
                  match-type
                  'line-after-extends-or-implements2)
-                (when-let ((backwards-string
+                (when-let* ((backwards-string
                             (phps-mode-indent--backwards-looking-at
                              "\n+\\([\t ]*\\)class[\n\t ]+[a-zA-Z0-9_]+[\n\t ]+\\(extends[\n\t ]+[a-zA-Z0-9_]+\\)?[\n\t ]*\\(implements[\n\t ]+[a-zA-Z0-9_]+\\)?\\'")))
                   (let ((old-indentation
@@ -1105,7 +1105,7 @@ Optionally start FROM-END-OF-LINE."
                 (setq
                  match-type
                  'line-that-ends-bracket)
-                (when-let
+                (when-let*
                     ((reference-line
                       (phps-mode-indent--get-previous-start-of-bracket-line)))
                   ;; (message "reference-line: %S" reference-line)
@@ -1353,7 +1353,7 @@ Optionally start FROM-END-OF-LINE."
                  'line-after-line-that-ends-with-semicolon)
                 (beginning-of-line)
 
-                (when-let
+                (when-let*
                     ((reference-line
                       (phps-mode-indent--get-previous-reference-command-line)))
 
@@ -1429,7 +1429,7 @@ Optionally start FROM-END-OF-LINE."
                 (setq
                  match-type
                  'line-that-starts-with-closing-bracket)
-                (when-let
+                (when-let*
                     ((reference-line
                       (phps-mode-indent--get-previous-start-of-bracket-line)))
                   (let ((reference-indentation

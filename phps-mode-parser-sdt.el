@@ -3064,7 +3064,7 @@
  184
  (lambda(args terminals)
    ;; Iterate optional parameters are declare them as new variable declarations
-   (when-let ((parameter-list (nth 5 args)))
+   (when-let* ((parameter-list (nth 5 args)))
      (dolist (parameter parameter-list)
        (let ((parameter-ast-type (plist-get parameter 'ast-type)))
          (cond
@@ -4663,7 +4663,7 @@
 (puthash
  318
  (lambda(args terminals)
-   (when-let (const-list (nth 2 args))
+   (when-let* ((const-list (nth 2 args)))
      (let ((const-count (length const-list))
            (const-index 0))
        (while (< const-index const-count)
@@ -4701,7 +4701,7 @@
 (puthash
  319
  (lambda(args terminals)
-   (when-let (const-list (nth 3 args))
+   (when-let* ((const-list (nth 3 args)))
      (let ((const-count (length const-list))
            (const-index 0))
        (while (< const-index const-count)
@@ -4797,8 +4797,8 @@
        (let ((property-list
               (plist-get attributed-class-statement 'subject))
              (is-static))
-         (when-let (property-modifiers
-                    (plist-get attributed-class-statement 'modifiers))
+         (when-let* ((property-modifiers
+                      (plist-get attributed-class-statement 'modifiers)))
            (dolist (modifier property-modifiers)
              (when (equal modifier 'static)
                (setq is-static t))))
@@ -4869,10 +4869,10 @@
                "__construct")))
 
          ;; Is static method?
-         (when-let (method-modifiers
+         (when-let* ((method-modifiers
                     (plist-get
                      attributed-class-statement
-                     'modifiers))
+                     'modifiers)))
            (dolist (method-modifier method-modifiers)
              (when (equal method-modifier 'static)
                (setq is-static-p t))))

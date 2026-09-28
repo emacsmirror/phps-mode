@@ -147,7 +147,7 @@
             'font-lock-warning-face
           'font-lock-variable-name-face)))
 
-     ((when-let ((face
+     ((when-let* ((face
                   (gethash
                    token-name
                    phps-mode-syntax-color--token-font-face)))
@@ -764,7 +764,7 @@ of performed operations.  Optionally do it FORCE-SYNCHRONOUS."
     (phps-mode-lex-analyzer--cancel-idle-timer))
 
   ;; Iterate tokens from beginning to end and comment out all PHP code
-  (when-let ((tokens phps-mode-lex-analyzer--tokens))
+  (when-let* ((tokens phps-mode-lex-analyzer--tokens))
 
     (phps-mode-debug-message
      (message
@@ -864,7 +864,7 @@ of performed operations.  Optionally do it FORCE-SYNCHRONOUS."
     (phps-mode-lex-analyzer--cancel-idle-timer))
 
   ;; Iterate tokens from beginning to end and uncomment out all commented PHP code
-  (when-let ((tokens phps-mode-lex-analyzer--tokens))
+  (when-let* ((tokens phps-mode-lex-analyzer--tokens))
     (let ((offset 0))
       (dolist (token tokens)
         (let ((token-label (car token))
